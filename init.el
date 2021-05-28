@@ -22,7 +22,7 @@
 (use-package gcmh)
 (gcmh-mode 1)
 
-(load-file "~/.emacs.d/Readme.el")
+(load-file "~/.emacs.d/config.el")
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
