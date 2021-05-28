@@ -1,5 +1,19 @@
 * My dot emacs
 
+I recently declared .emacs.d bankruptcy. I had a few completion issues
+that were getting annoying and wanted to check out some new packages
+like selectrum so I thought I'd start from semi-scratch - new config
+and copy over old pieces a bit at a time.
+
+I also thought it would be a good time to start checking out the
+straight package manager and selectrum.
+
+I also decided that instead of converting my org file config each time
+I loaded Emacs I'd add a hook to tangle it each time I save a change for faster
+loading. 
+
+Maybe I'll get back to making videos to show all of this. 
+
 If you're looking for the older config that matches my earlier videos
 (up to 77) look here
 [[https://github.com/zamansky/dot-emacs-videos-to-77][https://github.com/zamansky/dot-emacs-videos-to-77]]

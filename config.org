@@ -12,6 +12,31 @@
 
 #+end_src
 
+* Keybindings
+#+begin_src emacs-lisp
+  
+  
+  (use-package general)
+  
+  (defun z/load-iorg ()
+    (interactive )
+    (find-file "~/Sync/orgfiles/i.org"))
+  
+  (general-define-key
+   :prefix-command 'z-map
+  
+   :prefix "C-z"
+   "i" 'z/load-iorg
+   "m" 'mu4e
+   "s" 'flyspell-correct-word-before-point
+   "2" 'make-frame-command
+   "0" 'delete-frame
+   "o" 'other-frame
+   )
+    
+#+end_src
+
+
 * Themes and interface tweaks
 #+begin_src emacs-lisp
   
@@ -62,30 +87,6 @@
   
   (setenv "BROWSER" "firefox")
 
-#+end_src
-
-* Keybindings
-#+begin_src emacs-lisp
-  
-  
-  (use-package general)
-  
-  (defun z/load-iorg ()
-    (interactive )
-    (find-file "~/Sync/orgfiles/i.org"))
-  
-  (general-define-key
-   :prefix-command 'z-map
-  
-   :prefix "C-z"
-   "i" 'z/load-iorg
-   "m" 'mu4e
-   "s" 'flyspell-correct-word-before-point
-   "2" 'make-frame-command
-   "0" 'delete-frame
-   "o" 'other-frame
-   )
-    
 #+end_src
 
 * Completion frameworks
