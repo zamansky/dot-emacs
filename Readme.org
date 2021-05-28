@@ -1,0 +1,6 @@
+* My dot emacs
+
+If you're looking for the older config that matches my earlier videos
+(up to 77) look here
+[[https://github.com/zamansky/dot-emacs-videos-to-77][https://github.com/zamansky/dot-emacs-videos-to-77]]
+
