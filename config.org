@@ -269,6 +269,10 @@
   
     
 #+end_src
+* Hydra
+#+begin_src emacs-lisp 
+(use-package hydra)
+#+end_src
 * Elfeed
 #+begin_src emacs-lisp
   (setq elfeed-db-directory "~/Sync/shared/elfeeddb")
