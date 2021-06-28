@@ -11,7 +11,7 @@
       (load-file f)))
 
 #+end_src
-
+        
 * Keybindings
 #+begin_src emacs-lisp
   
@@ -89,37 +89,46 @@
 
 #+end_src
 
+* exec-path-from-shell
+#+begin_src emacs-lisp
+(use-package exec-path-from-shell
+  :config
+  (exec-path-from-shell-initialize))
+
+#+end_src
+
 * Completion frameworks
 
 #+begin_src emacs-lisp
-  (use-package selectrum
-  :init
-  (selectrum-mode +1))
-
-(use-package consult
-  :general
-  ("M-y" 'consult-yank))
-
-(setq completion-ignore-case t)
-(setq read-file-name-completion-ignore-case t)
-
-(use-package marginalia)
-
-
-(use-package orderless
-  :init
-  (setq completion-styles '(orderless)))
-
-(use-package company
-  :config
-  (setq company-idle-delay 0)
-  (setq company-minimum-prefix-length 3)
-  (global-company-mode t))
-
-
-
-
+    (use-package selectrum
+    :init
+    (selectrum-mode +1))
   
+  (use-package consult
+    :general
+    ("M-y" 'consult-yank))
+  
+  (setq completion-ignore-case t)
+  (setq read-file-name-completion-ignore-case t)
+  
+  (use-package marginalia
+    :config (marginalia-mode))
+  
+  
+  (use-package orderless
+    :init
+    (setq completion-styles '(orderless)))
+  
+  (use-package company
+    :config
+    (setq company-idle-delay 0)
+    (setq company-minimum-prefix-length 3)
+    (global-company-mode t))
+  
+  
+  
+  
+    
 #+end_src
 
 * org
@@ -481,6 +490,27 @@ dired-dwim-target t)
   (use-package forge)
 #+end_src
 
+* lsp
+
+#+begin_src emacs-lisp 
+            (use-package eglot)
+    
+    
+  (defconst my-eclipse-jdt-home "/home/zamansky/.emacs.d/.cache/lsp/eclipse.jdt.ls/plugins/org.eclipse.equinox.launcher_1.6.100.v20201223-0822.jar")
+    (defun my-eglot-eclipse-jdt-contact (interactive)
+      "Contact with the jdt server input INTERACTIVE."
+      (let ((cp (getenv "CLASSPATH")))
+        (setenv "CLASSPATH" (concat cp ":" my-eclipse-jdt-home))
+        (unwind-protect (eglot--eclipse-jdt-contact nil)
+          (setenv "CLASSPATH" cp))))
+    (setcdr (assq 'java-mode eglot-server-programs) #'my-eglot-eclipse-jdt-contact)
+    
+   
+    ;; set the python interpeter
+(setq python-shell-interpreter "python3")
+    
+    
+#+end_src
 * refile this 
 #+begin_src emacs-lisp
 
@@ -525,4 +555,6 @@ dired-dwim-target t)
 ;; eval: (add-hook 'after-save-hook (lambda ()(if (y-or-n-p "Tangle?")(org-babel-tangle))) nil t) 
 ;; End:
   
+
+
 
