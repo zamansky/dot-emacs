@@ -2,6 +2,15 @@
 #+PROPERTY: header-args :comments yes :results silent :tangle yes
 
 
+* Path
+#+begin_src emacs-lisp
+
+
+(use-package exec-path-from-shell
+  :ensure t
+  :config
+  (exec-path-from-shell-initialize))
+#+end_src
 * Custom Functions
 #+begin_src emacs-lisp
 
@@ -493,23 +502,54 @@ dired-dwim-target t)
 * lsp
 
 #+begin_src emacs-lisp 
-            (use-package eglot)
-    
-    
-  (defconst my-eclipse-jdt-home "/home/zamansky/.emacs.d/.cache/lsp/eclipse.jdt.ls/plugins/org.eclipse.equinox.launcher_1.6.100.v20201223-0822.jar")
-    (defun my-eglot-eclipse-jdt-contact (interactive)
-      "Contact with the jdt server input INTERACTIVE."
-      (let ((cp (getenv "CLASSPATH")))
-        (setenv "CLASSPATH" (concat cp ":" my-eclipse-jdt-home))
-        (unwind-protect (eglot--eclipse-jdt-contact nil)
-          (setenv "CLASSPATH" cp))))
-    (setcdr (assq 'java-mode eglot-server-programs) #'my-eglot-eclipse-jdt-contact)
-    
-   
-    ;; set the python interpeter
-(setq python-shell-interpreter "python3")
-    
-    
+  (use-package eglot)
+  
+  
+      (defconst my-eclipse-jdt-home "/home/zamansky/.emacs.d/.cache/lsp/eclipse.jdt.ls/plugins/org.eclipse.equinox.launcher_1.6.100.v20201223-0822.jar")
+        (defun my-eglot-eclipse-jdt-contact (interactive)
+          "Contact with the jdt server input INTERACTIVE."
+          (let ((cp (getenv "CLASSPATH")))
+            (setenv "CLASSPATH" (concat cp ":" my-eclipse-jdt-home))
+            (unwind-protect (eglot--eclipse-jdt-contact nil)
+              (setenv "CLASSPATH" cp))))
+        (setcdr (assq 'java-mode eglot-server-programs) #'my-eglot-eclipse-jdt-contact)
+  
+  
+        ;; set the python interpeter
+    (setq python-shell-interpreter "python3")
+  
+  (add-hook 'python-mode-hook 'eglot-ensure)
+  (add-hook 'java-mode-hook 'eglot-ensure)
+  (add-hook 'c-mode-hook 'eglot-ensure)
+  (add-hook 'c++-mode-hook 'eglot-ensure)
+#+end_src
+* Clojure
+#+begin_src emacs-lisp
+(use-package cider
+    :config
+    (add-hook 'cider-repl-mode-hook #'company-mode)
+    (add-hook 'cider-mode-hook #'company-mode)
+    (add-hook 'cider-mode-hook #'eldoc-mode)
+;;    (add-hook 'cider-mode-hook #'cider-hydra-mode)
+    (setq cider-repl-use-pretty-printing t)
+    (setq cider-repl-display-help-banner nil)
+    ;;    (setq cider-cljs-lein-repl "(do (use 'figwheel-sidecar.repl-api) (start-figwheel!) (cljs-repl))")
+
+    :bind (("M-r" . cider-namespace-refresh)
+           ("C-c r" . cider-repl-reset)
+           ("C-c ." . cider-reset-test-run-tests))
+    )
+
+(defun my-clojure-mode-hook ()
+    (clj-refactor-mode 1)
+    (yas-minor-mode 1) ; for adding require/use/import statements
+    ;; This choice of keybinding leaves cider-macroexpand-1 unbound
+    (cljr-add-keybindings-with-prefix "C-c C-m"))
+(use-package clj-refactor
+:ensure t
+:config
+(add-hook 'clojure-mode-hook #'my-clojure-mode-hook))
+
 #+end_src
 * refile this 
 #+begin_src emacs-lisp
