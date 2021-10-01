@@ -516,7 +516,7 @@ dired-dwim-target t)
   
   
         ;; set the python interpeter
-    (setq python-shell-interpreter "python3")
+    (setq python-shell-interpreter "ipython3")
   
   (add-hook 'python-mode-hook 'eglot-ensure)
   (add-hook 'java-mode-hook 'eglot-ensure)
