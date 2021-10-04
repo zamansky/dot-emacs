@@ -50,7 +50,7 @@
 #+begin_src emacs-lisp
   
   
-  (use-package modus-operandi-theme)
+  ;; (use-package modus-operandi-theme)
   (use-package modus-themes)
   (load-theme 'modus-operandi t)
   ;;(set-frame-font "Inconsolata-18")
