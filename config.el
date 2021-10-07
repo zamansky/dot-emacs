@@ -1,18 +1,18 @@
-;; [[file:~/.emacs.d/config.org::*Path][Path:1]]
+;; [[file:config.org::*Path][Path:1]]
 (use-package exec-path-from-shell
   :ensure t
   :config
   (exec-path-from-shell-initialize))
 ;; Path:1 ends here
 
-;; [[file:~/.emacs.d/config.org::*Custom Functions][Custom Functions:1]]
+;; [[file:config.org::*Custom Functions][Custom Functions:1]]
 (defun load-if-exists (f)
   "load the elisp file only if it exists and is readable"
   (if (file-readable-p f)
       (load-file f)))
 ;; Custom Functions:1 ends here
 
-;; [[file:~/.emacs.d/config.org::*Keybindings][Keybindings:1]]
+;; [[file:config.org::*Keybindings][Keybindings:1]]
 (use-package general)
 
 (defun z/load-iorg ()
@@ -32,7 +32,7 @@
  )
 ;; Keybindings:1 ends here
 
-;; [[file:~/.emacs.d/config.org::*Themes and interface tweaks][Themes and interface tweaks:1]]
+;; [[file:config.org::*Themes and interface tweaks][Themes and interface tweaks:1]]
 ;; (use-package modus-operandi-theme)
 (use-package modus-themes)
 (load-theme 'modus-operandi t)
@@ -80,13 +80,13 @@
 (setenv "BROWSER" "firefox")
 ;; Themes and interface tweaks:1 ends here
 
-;; [[file:~/.emacs.d/config.org::*exec-path-from-shell][exec-path-from-shell:1]]
+;; [[file:config.org::*exec-path-from-shell][exec-path-from-shell:1]]
 (use-package exec-path-from-shell
   :config
   (exec-path-from-shell-initialize))
 ;; exec-path-from-shell:1 ends here
 
-;; [[file:~/.emacs.d/config.org::*Completion frameworks][Completion frameworks:1]]
+;; [[file:config.org::*Completion frameworks][Completion frameworks:1]]
 ;; (use-package selectrum
     ;; :init
     ;; (selectrum-mode +1))
@@ -127,18 +127,18 @@
 
   ;; Enable recursive minibuffers
   (setq enable-recursive-minibuffers t))
-
-
+  (use-package marginalia
+    :config (marginalia-mode))
 
   (use-package consult
     :general
-    ("M-y" 'consult-yank))
+    ("M-y" 'consult-yank-from-kill-ring
+     "C-x b" 'consult-buffer))
+(recentf-mode)
 
   (setq completion-ignore-case t)
   (setq read-file-name-completion-ignore-case t)
 
-  (use-package marginalia
-    :config (marginalia-mode))
 
 
   (use-package orderless
@@ -152,7 +152,7 @@
     (global-company-mode t))
 ;; Completion frameworks:1 ends here
 
-;; [[file:~/.emacs.d/config.org::*org][org:1]]
+;; [[file:config.org::*org][org:1]]
 (use-package ox-reveal)
 
 (require 'org-protocol)
@@ -297,11 +297,11 @@
   (org-agenda-fortnight-view))
 ;; org:1 ends here
 
-;; [[file:~/.emacs.d/config.org::*Hydra][Hydra:1]]
+;; [[file:config.org::*Hydra][Hydra:1]]
 (use-package hydra)
 ;; Hydra:1 ends here
 
-;; [[file:~/.emacs.d/config.org::*Elfeed][Elfeed:1]]
+;; [[file:config.org::*Elfeed][Elfeed:1]]
 (setq elfeed-db-directory "~/Sync/shared/elfeeddb")
 
 (defun mz/elfeed-browse-url (&optional use-generic-p)
@@ -442,7 +442,7 @@
 (setf elfeed-search-sort-function #'my-elfeed-tag-sort)
 ;; Elfeed:1 ends here
 
-;; [[file:~/.emacs.d/config.org::*diredstuff][diredstuff:1]]
+;; [[file:config.org::*diredstuff][diredstuff:1]]
 (use-package diredfl
 :config 
 (diredfl-global-mode 1))
@@ -453,11 +453,11 @@ dired-dwim-target t)
 (add-hook 'dired-mode-hook 'dired-hide-details-mode)
 ;; diredstuff:1 ends here
 
-;; [[file:~/.emacs.d/config.org::*floobits][floobits:1]]
+;; [[file:config.org::*floobits][floobits:1]]
 (use-package floobits :ensure t)
 ;; floobits:1 ends here
 
-;; [[file:~/.emacs.d/config.org::*Snippets][Snippets:1]]
+;; [[file:config.org::*Snippets][Snippets:1]]
 (use-package yasnippet
   :init
     (yas-global-mode 1))
@@ -466,7 +466,7 @@ dired-dwim-target t)
 (use-package yasnippet-classic-snippets)
 ;; Snippets:1 ends here
 
-;; [[file:~/.emacs.d/config.org::*Magit][Magit:1]]
+;; [[file:config.org::*Magit][Magit:1]]
 ;; some ediff settings
 (setq ediff-diff-options "")
 (setq ediff-custom-diff-options "-u")
@@ -499,7 +499,7 @@ dired-dwim-target t)
 (use-package forge)
 ;; Magit:1 ends here
 
-;; [[file:~/.emacs.d/config.org::*lsp][lsp:1]]
+;; [[file:config.org::*lsp][lsp:1]]
 (use-package eglot)
 
 
@@ -522,7 +522,7 @@ dired-dwim-target t)
 (add-hook 'c++-mode-hook 'eglot-ensure)
 ;; lsp:1 ends here
 
-;; [[file:~/.emacs.d/config.org::*Clojure][Clojure:1]]
+;; [[file:config.org::*Clojure][Clojure:1]]
 (use-package cider
     :config
     (add-hook 'cider-repl-mode-hook #'company-mode)
@@ -549,7 +549,7 @@ dired-dwim-target t)
 (add-hook 'clojure-mode-hook #'my-clojure-mode-hook))
 ;; Clojure:1 ends here
 
-;; [[file:~/.emacs.d/config.org::*refile this][refile this:1]]
+;; [[file:config.org::*refile this][refile this:1]]
 (setq user-full-name "Mike Zamansky"
       user-mail-address "mz631@hunter.cuny.edu")
 ;; (global-set-key [mouse-3] 'flyspell-correct-word-before-point)

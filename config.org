@@ -112,11 +112,11 @@
       ;; (use-package selectrum
       ;; :init
       ;; (selectrum-mode +1))
-    
+  
     (use-package vertico
       :init
       (vertico-mode +1))
-    
+  
     (use-package orderless
     :init
     (setq completion-styles '(orderless)
@@ -149,34 +149,34 @@
   
     ;; Enable recursive minibuffers
     (setq enable-recursive-minibuffers t))
-  
-    
-    
-    (use-package consult
-      :general
-      ("M-y" 'consult-yank))
-    
-    (setq completion-ignore-case t)
-    (setq read-file-name-completion-ignore-case t)
-    
     (use-package marginalia
       :config (marginalia-mode))
-    
-    
+        
+    (use-package consult
+      :general
+      ("M-y" 'consult-yank-from-kill-ring
+       "C-x b" 'consult-buffer))
+  (recentf-mode)
+
+    (setq completion-ignore-case t)
+    (setq read-file-name-completion-ignore-case t)
+  
+  
+  
     (use-package orderless
       :init
       (setq completion-styles '(orderless)))
-    
+  
     (use-package company
       :config
       (setq company-idle-delay 0)
       (setq company-minimum-prefix-length 3)
       (global-company-mode t))
-    
-    
-    
-    
-    
+  
+  
+  
+  
+  
 #+end_src
 
 * org
