@@ -90,48 +90,48 @@
 ;; (use-package selectrum
       ;; :init
       ;; (selectrum-mode +1))
-  
+
     (use-package vertico
       :init
       (vertico-mode +1))
-  
+
   (use-package orderless
     :init
     (setq completion-styles '(orderless)
           completion-category-defaults nil
           completion-category-overrides '((file (styles partial-completion)))))
-  
+
   ;; Persist history over Emacs restarts. Vertico sorts by history position.
   (use-package savehist
     :init
     (savehist-mode))
-  
-  
+
+
     (use-package marginalia
       :config (marginalia-mode))
-  
+
     (use-package consult
       :general
       ("M-y" 'consult-yank-from-kill-ring
        "C-x b" 'consult-buffer))
   (recentf-mode)
-  
+
     (setq completion-ignore-case t)
     (setq read-file-name-completion-ignore-case t)
-  
-  
-  
+
+
+
     (use-package orderless
       :init
       (setq completion-styles '(orderless)))
-  
+
     (use-package company
       :config
       (setq company-idle-delay 0)
       (setq company-minimum-prefix-length 3)
       (global-company-mode t))
-  
-  
+
+
   (use-package embark
   :ensure t
 
@@ -140,18 +140,20 @@
    ("C-;" . embark-dwim)        ;; good alternative: M-.
    ("C-h B" . embark-bindings)) ;; alternative for `describe-bindings'
 
-  :init
+   :init
 
-  ;; Optionally replace the key help with a completing-read interface
-  (setq prefix-help-command #'embark-prefix-help-command)
+   ;; Optionally replace the key help with a completing-read interface
+   (setq prefix-help-command #'embark-prefix-help-command)
 
-  :config
+   :config
 
-  ;; Hide the mode line of the Embark live/completions buffers
-  (add-to-list 'display-buffer-alist
-               '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
-                 nil
-                 (window-parameters (mode-line-format . none)))))
+   ;; Hide the mode line of the Embark live/completions buffers
+   (add-to-list 'display-buffer-alist
+                '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
+                  nil
+                  (window-parameters (mode-line-format . none))))
+
+  )
 
 ;; Consult users will also want the embark-consult package.
 (use-package embark-consult
@@ -560,6 +562,20 @@ dired-dwim-target t)
 :config
 (add-hook 'clojure-mode-hook #'my-clojure-mode-hook))
 ;; Clojure:1 ends here
+
+;; [[file:config.org::*Parens stuff][Parens stuff:1]]
+(use-package paren
+  :config
+  (setq show-paren-style 'expression)
+  (setq show-paren-when-point-in-periphery t)
+  (setq show-paren-when-point-inside-paren nil)
+  :hook (after-init-hook . show-paren-mode))
+;; Parens stuff:1 ends here
+
+;; [[file:config.org::*Web stuff][Web stuff:1]]
+(use-package web-mode)
+(use-package emmet-mode)
+;; Web stuff:1 ends here
 
 ;; [[file:config.org::*refile this][refile this:1]]
 (setq user-full-name "Mike Zamansky"
