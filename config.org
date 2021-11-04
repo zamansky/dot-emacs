@@ -191,7 +191,6 @@
   
   
 #+end_src
-
 * org
 #+begin_src emacs-lisp
   (use-package ox-reveal)
@@ -616,14 +615,14 @@ dired-dwim-target t)
 
 * Web stuff
 #+begin_src emacs-lisp
-      (use-package web-mode
-    )
-    (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
-      (use-package emmet-mode)
-      (add-hook 'sgml-mode-hook 'emmet-mode) ;; Auto-start on any markup modes
-  (add-hook 'css-mode-hook  'emmet-mode) ;; enable Emmet's css abbreviation.
-  
-  
+    
+    (use-package web-mode)
+    (add-hook 'html-mode-hook 'web-mode) ;; Auto-start on any markup modes
+    (use-package emmet-mode)
+    (add-hook 'web-mode-hook  'emmet-mode)
+      
+    
+    
 #+end_src
 * refile this 
 #+begin_src emacs-lisp

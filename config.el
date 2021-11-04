@@ -573,12 +573,10 @@ dired-dwim-target t)
 ;; Parens stuff:1 ends here
 
 ;; [[file:config.org::*Web stuff][Web stuff:1]]
-(use-package web-mode
-  )
-  (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
-    (use-package emmet-mode)
-    (add-hook 'sgml-mode-hook 'emmet-mode) ;; Auto-start on any markup modes
-(add-hook 'css-mode-hook  'emmet-mode) ;; enable Emmet's css abbreviation.
+(use-package web-mode)
+(add-hook 'html-mode-hook 'web-mode) ;; Auto-start on any markup modes
+(use-package emmet-mode)
+(add-hook 'web-mode-hook  'emmet-mode)
 ;; Web stuff:1 ends here
 
 ;; [[file:config.org::*refile this][refile this:1]]
