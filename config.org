@@ -616,9 +616,14 @@ dired-dwim-target t)
 
 * Web stuff
 #+begin_src emacs-lisp
-(use-package web-mode)
-(use-package emmet-mode)
-
+      (use-package web-mode
+    )
+    (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+      (use-package emmet-mode)
+      (add-hook 'sgml-mode-hook 'emmet-mode) ;; Auto-start on any markup modes
+  (add-hook 'css-mode-hook  'emmet-mode) ;; enable Emmet's css abbreviation.
+  
+  
 #+end_src
 * refile this 
 #+begin_src emacs-lisp
