@@ -826,6 +826,11 @@ dired-dwim-target t)
           (indent-region (overlay-start o) (overlay-end o)))))  
 
 #+end_src
+#+begin_src emacs-lisp
+  (add-hook 'clojure-mode-hook #'smartparens-mode)
+
+
+#+end_src
 * Web stuff
 #+begin_src emacs-lisp
     

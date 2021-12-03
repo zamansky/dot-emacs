@@ -780,6 +780,10 @@ dired-dwim-target t)
         (indent-region (overlay-start o) (overlay-end o)))))
 ;; Parens stuff:2 ends here
 
+;; [[file:config.org::*Parens stuff][Parens stuff:3]]
+(add-hook 'clojure-mode-hook #'smartparens-mode)
+;; Parens stuff:3 ends here
+
 ;; [[file:config.org::*Web stuff][Web stuff:1]]
 (use-package web-mode)
 (add-hook 'html-mode-hook 'web-mode) ;; Auto-start on any markup modes
