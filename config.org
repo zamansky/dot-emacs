@@ -48,36 +48,36 @@
 
 * Themes and interface tweaks
 #+begin_src emacs-lisp
-  
-  
+
+
   ;; (use-package modus-operandi-theme)
   (use-package modus-themes)
   (load-theme 'modus-operandi t)
   ;;(set-frame-font "Inconsolata-18")
   (set-frame-font "Firacode-18")
-  
+
   (setq inhibit-startup-message t)
   (tool-bar-mode -1)
   (fset 'yes-or-no-p 'y-or-n-p)
   (global-auto-revert-mode 1) ;; you might not want this
   (setq auto-revert-verbose nil) ;; or this
   (global-set-key (kbd "<f5>") 'revert-buffer)
-  
+
   (use-package default-text-scale)
-  
+
   (use-package expand-region
     :general
     ("C-=" 'er/expand-region))
-  
+
   (use-package hungry-delete
     :config
     (global-hungry-delete-mode))
-  
-  (use-package aggressive-indent 
-    :config
-    (global-aggressive-indent-mode 1)
-    (add-to-list 'aggressive-indent-excluded-modes 'html-mode)
-    )
+
+  ;; (use-package aggressive-indent 
+  ;;   :config
+  ;;   (global-aggressive-indent-mode 1)
+  ;;   (add-to-list 'aggressive-indent-excluded-modes 'html-mode)
+  ;;   )
   
   (use-package ace-window
     :general
@@ -85,15 +85,15 @@
     ([remap other-window] 'ace-window)
     :config
     (setq aw-scope 'frame)) ;; was global
-  
+
   (use-package which-key
     :config
     (which-key-mode))
-  
+
   (use-package pcre2el
     :config 
     (pcre-mode))
-  
+
   (setenv "BROWSER" "firefox")
 
 #+end_src
@@ -525,56 +525,86 @@ dired-dwim-target t)
   (setq ediff-custom-diff-options "-u")
   (setq ediff-window-setup-function 'ediff-setup-windows-plain)
   (setq ediff-split-window-function 'split-window-vertically)
-  
+
   (use-package magit
           :init
       (progn
   (setq magit-section-initial-visibility-alist
         '((stashes . hide) (untracked . hide) (unpushed . hide)))
-  
-  
+
+
       (bind-key "C-x g" 'magit-status)
       ))
-  
+
   (setq magit-status-margin
     '(t "%Y-%m-%d %H:%M " magit-log-margin-width t 18))
-  
+
       (use-package git-timemachine
           )
-  
+
   ;; (use-package git-gutter-fringe
   ;;
   ;; :config
   ;;(global-git-gutter-mode))
-  
-  
-  
+
+
+  (use-package magit-delta
+  :hook (magit-mode . magit-delta-mode))
+
   (use-package forge)
 #+end_src
 
 * lsp
 
-#+begin_src emacs-lisp 
+#+begin_src emacs-lisp
+    (use-package lsp-mode
+
+    :init
+    ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
+    (setq lsp-keymap-prefix "C-c l")
+    :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
+           (python-mode . lsp)
+           (c-mode . lsp)
+           (c++-mode . lsp)
+           (java-mode . lsp)
+           ;; if you want which-key integration
+           (lsp-mode . lsp-enable-which-key-integration))
+    :commands lsp)
+
+  ;; optionally
+  (use-package lsp-ui :commands lsp-ui-mode)
+
+  ;; optionally if you want to use debugger
+  (use-package dap-mode)
+  ;; (use-package dap-LANGUAGE) to load the dap adapter for your language
+
+  (setq python-shell-interpreter "python3")
+
+
+#+end_src
+
+#+begin_src emacs-lisp :tangle no
+  
   (use-package eglot)
-  
-  
-      (defconst my-eclipse-jdt-home "/home/zamansky/.emacs.d/.cache/lsp/eclipse.jdt.ls/plugins/org.eclipse.equinox.launcher_1.6.100.v20201223-0822.jar")
-        (defun my-eglot-eclipse-jdt-contact (interactive)
-          "Contact with the jdt server input INTERACTIVE."
-          (let ((cp (getenv "CLASSPATH")))
-            (setenv "CLASSPATH" (concat cp ":" my-eclipse-jdt-home))
-            (unwind-protect (eglot--eclipse-jdt-contact nil)
-              (setenv "CLASSPATH" cp))))
-        (setcdr (assq 'java-mode eglot-server-programs) #'my-eglot-eclipse-jdt-contact)
-  
-  
+
+
+       (defconst my-eclipse-jdt-home "/home/zamansky/.emacs.d/.cache/lsp/eclipse.jdt.ls/plugins/org.eclipse.equinox.launcher_1.6.100.v20201223-0822.jar")
+         (defun my-eglot-eclipse-jdt-contact (interactive)
+           "Contact with the jdt server input INTERACTIVE."
+           (let ((cp (getenv "CLASSPATH")))
+             (setenv "CLASSPATH" (concat cp ":" my-eclipse-jdt-home))
+             (unwind-protect (eglot--eclipse-jdt-contact nil)
+               (setenv "CLASSPATH" cp))))
+         (setcdr (assq 'java-mode eglot-server-programs) #'my-eglot-eclipse-jdt-contact)
+
+
         ;; set the python interpeter
-    (setq python-shell-interpreter "ipython3")
-  
-  (add-hook 'python-mode-hook 'eglot-ensure)
-  (add-hook 'java-mode-hook 'eglot-ensure)
-  (add-hook 'c-mode-hook 'eglot-ensure)
-  (add-hook 'c++-mode-hook 'eglot-ensure)
+    (setq python-shell-interpreter "python3")
+
+   (add-hook 'python-mode-hook 'eglot-ensure)
+   (add-hook 'java-mode-hook 'eglot-ensure)
+   (add-hook 'c-mode-hook 'eglot-ensure)
+   (add-hook 'c++-mode-hook 'eglot-ensure)
 #+end_src
 * Clojure
 #+begin_src emacs-lisp
@@ -841,6 +871,19 @@ dired-dwim-target t)
       
     
     
+#+end_src
+* mu4e
+#+begin_src emacs-lisp
+  (use-package mu4e)
+
+#+end_src
+* dirvish
+#+begin_src emacs-lisp 
+  ;; (use-package dirvish
+  ;;   :ensure t
+  ;;   :init
+  ;;   ;; Let Dirvish take over Dired globally
+  ;;   (dirvish-override-dired-mode))
 #+end_src
 * refile this 
 #+begin_src emacs-lisp

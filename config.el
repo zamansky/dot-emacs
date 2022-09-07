@@ -56,11 +56,11 @@
   :config
   (global-hungry-delete-mode))
 
-(use-package aggressive-indent 
-  :config
-  (global-aggressive-indent-mode 1)
-  (add-to-list 'aggressive-indent-excluded-modes 'html-mode)
-  )
+;; (use-package aggressive-indent 
+;;   :config
+;;   (global-aggressive-indent-mode 1)
+;;   (add-to-list 'aggressive-indent-excluded-modes 'html-mode)
+;;   )
 
 (use-package ace-window
   :general
@@ -509,31 +509,35 @@ dired-dwim-target t)
 ;;(global-git-gutter-mode))
 
 
+(use-package magit-delta
+:hook (magit-mode . magit-delta-mode))
 
 (use-package forge)
 ;; Magit:1 ends here
 
 ;; [[file:config.org::*lsp][lsp:1]]
-(use-package eglot)
+(use-package lsp-mode
 
+  :init
+  ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
+  (setq lsp-keymap-prefix "C-c l")
+  :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
+         (python-mode . lsp)
+         (c-mode . lsp)
+         (c++-mode . lsp)
+         (java-mode . lsp)
+         ;; if you want which-key integration
+         (lsp-mode . lsp-enable-which-key-integration))
+  :commands lsp)
 
-    (defconst my-eclipse-jdt-home "/home/zamansky/.emacs.d/.cache/lsp/eclipse.jdt.ls/plugins/org.eclipse.equinox.launcher_1.6.100.v20201223-0822.jar")
-      (defun my-eglot-eclipse-jdt-contact (interactive)
-        "Contact with the jdt server input INTERACTIVE."
-        (let ((cp (getenv "CLASSPATH")))
-          (setenv "CLASSPATH" (concat cp ":" my-eclipse-jdt-home))
-          (unwind-protect (eglot--eclipse-jdt-contact nil)
-            (setenv "CLASSPATH" cp))))
-      (setcdr (assq 'java-mode eglot-server-programs) #'my-eglot-eclipse-jdt-contact)
+;; optionally
+(use-package lsp-ui :commands lsp-ui-mode)
 
+;; optionally if you want to use debugger
+(use-package dap-mode)
+;; (use-package dap-LANGUAGE) to load the dap adapter for your language
 
-      ;; set the python interpeter
-  (setq python-shell-interpreter "ipython3")
-
-(add-hook 'python-mode-hook 'eglot-ensure)
-(add-hook 'java-mode-hook 'eglot-ensure)
-(add-hook 'c-mode-hook 'eglot-ensure)
-(add-hook 'c++-mode-hook 'eglot-ensure)
+(setq python-shell-interpreter "python3")
 ;; lsp:1 ends here
 
 ;; [[file:config.org::*Clojure][Clojure:1]]
@@ -790,6 +794,18 @@ dired-dwim-target t)
 (use-package emmet-mode)
 (add-hook 'web-mode-hook  'emmet-mode)
 ;; Web stuff:1 ends here
+
+;; [[file:config.org::*mu4e][mu4e:1]]
+(use-package mu4e)
+;; mu4e:1 ends here
+
+;; [[file:config.org::*dirvish][dirvish:1]]
+;; (use-package dirvish
+;;   :ensure t
+;;   :init
+;;   ;; Let Dirvish take over Dired globally
+;;   (dirvish-override-dired-mode))
+;; dirvish:1 ends here
 
 ;; [[file:config.org::*refile this][refile this:1]]
 (setq user-full-name "Mike Zamansky"
