@@ -567,6 +567,7 @@ dired-dwim-target t)
            (c-mode . lsp)
            (c++-mode . lsp)
            (java-mode . lsp)
+           (clojure-mode . lsp)
            ;; if you want which-key integration
            (lsp-mode . lsp-enable-which-key-integration))
     :commands lsp)
