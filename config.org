@@ -556,7 +556,7 @@ dired-dwim-target t)
 
 * lsp
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
     (use-package lsp-mode
 
     :init
@@ -581,11 +581,13 @@ dired-dwim-target t)
 
   (setq python-shell-interpreter "python3")
 
+  (use-package lsp-java)
+
 
 #+end_src
 
-#+begin_src emacs-lisp :tangle no
-  
+#+begin_src emacs-lisp 
+
   (use-package eglot)
 
 
@@ -606,6 +608,7 @@ dired-dwim-target t)
    (add-hook 'java-mode-hook 'eglot-ensure)
    (add-hook 'c-mode-hook 'eglot-ensure)
    (add-hook 'c++-mode-hook 'eglot-ensure)
+  (add-hook 'clojure-mode-hook 'eglot-ensure)
 #+end_src
 * Clojure
 #+begin_src emacs-lisp

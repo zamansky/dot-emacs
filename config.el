@@ -515,31 +515,29 @@ dired-dwim-target t)
 (use-package forge)
 ;; Magit:1 ends here
 
-;; [[file:config.org::*lsp][lsp:1]]
-(use-package lsp-mode
+;; [[file:config.org::*lsp][lsp:2]]
+(use-package eglot)
 
-  :init
-  ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
-  (setq lsp-keymap-prefix "C-c l")
-  :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
-         (python-mode . lsp)
-         (c-mode . lsp)
-         (c++-mode . lsp)
-         (java-mode . lsp)
-         (clojure-mode . lsp)
-         ;; if you want which-key integration
-         (lsp-mode . lsp-enable-which-key-integration))
-  :commands lsp)
 
-;; optionally
-(use-package lsp-ui :commands lsp-ui-mode)
+     (defconst my-eclipse-jdt-home "/home/zamansky/.emacs.d/.cache/lsp/eclipse.jdt.ls/plugins/org.eclipse.equinox.launcher_1.6.100.v20201223-0822.jar")
+       (defun my-eglot-eclipse-jdt-contact (interactive)
+         "Contact with the jdt server input INTERACTIVE."
+         (let ((cp (getenv "CLASSPATH")))
+           (setenv "CLASSPATH" (concat cp ":" my-eclipse-jdt-home))
+           (unwind-protect (eglot--eclipse-jdt-contact nil)
+             (setenv "CLASSPATH" cp))))
+       (setcdr (assq 'java-mode eglot-server-programs) #'my-eglot-eclipse-jdt-contact)
 
-;; optionally if you want to use debugger
-(use-package dap-mode)
-;; (use-package dap-LANGUAGE) to load the dap adapter for your language
 
-(setq python-shell-interpreter "python3")
-;; lsp:1 ends here
+      ;; set the python interpeter
+  (setq python-shell-interpreter "python3")
+
+ (add-hook 'python-mode-hook 'eglot-ensure)
+ (add-hook 'java-mode-hook 'eglot-ensure)
+ (add-hook 'c-mode-hook 'eglot-ensure)
+ (add-hook 'c++-mode-hook 'eglot-ensure)
+(add-hook 'clojure-mode-hook 'eglot-ensure)
+;; lsp:2 ends here
 
 ;; [[file:config.org::*Clojure][Clojure:1]]
 (use-package parseclj)
