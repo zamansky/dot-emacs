@@ -462,9 +462,9 @@
 (diredfl-global-mode 1))
 
 (setq 
-dired-listing-switches "-lXGh --group-directories-first"
-dired-dwim-target t)
-(add-hook 'dired-mode-hook 'dired-hide-details-mode)
+ dired-listing-switches "-lXGh --group-directories-first"
+   dired-dwim-target t)
+;;(add-hook 'dired-mode-hook 'dired-hide-details-mode)
 ;; diredstuff:1 ends here
 
 ;; [[file:config.org::*floobits][floobits:1]]
@@ -537,6 +537,7 @@ dired-dwim-target t)
  (add-hook 'c-mode-hook 'eglot-ensure)
  (add-hook 'c++-mode-hook 'eglot-ensure)
 (add-hook 'clojure-mode-hook 'eglot-ensure)
+(add-hook 'rustic-mode-hook 'eglot-ensure)
 ;; lsp:2 ends here
 
 ;; [[file:config.org::*Clojure][Clojure:1]]
@@ -566,6 +567,11 @@ dired-dwim-target t)
   :config
   (add-hook 'clojure-mode-hook #'my-clojure-mode-hook))
 ;; Clojure:1 ends here
+
+;; [[file:config.org::*Rust][Rust:1]]
+(use-package rustic)
+(setq rustic-lsp-client 'eglot)
+;; Rust:1 ends here
 
 ;; [[file:config.org::*Parens stuff][Parens stuff:1]]
 (use-package paren

@@ -489,14 +489,14 @@
 #+end_src
 * diredstuff
 #+BEGIN_SRC emacs-lisp
-(use-package diredfl
-:config 
-(diredfl-global-mode 1))
+  (use-package diredfl
+  :config 
+  (diredfl-global-mode 1))
 
-(setq 
-dired-listing-switches "-lXGh --group-directories-first"
-dired-dwim-target t)
-(add-hook 'dired-mode-hook 'dired-hide-details-mode)
+  (setq 
+   dired-listing-switches "-lXGh --group-directories-first"
+     dired-dwim-target t)
+  ;;(add-hook 'dired-mode-hook 'dired-hide-details-mode)
 
 
 
@@ -609,6 +609,7 @@ dired-dwim-target t)
    (add-hook 'c-mode-hook 'eglot-ensure)
    (add-hook 'c++-mode-hook 'eglot-ensure)
   (add-hook 'clojure-mode-hook 'eglot-ensure)
+  (add-hook 'rustic-mode-hook 'eglot-ensure)
 #+end_src
 * Clojure
 #+begin_src emacs-lisp
@@ -639,6 +640,12 @@ dired-dwim-target t)
   (add-hook 'clojure-mode-hook #'my-clojure-mode-hook))
 
 #+end_src
+* Rust
+#+begin_src emacs-lisp
+  (use-package rustic)
+(setq rustic-lsp-client 'eglot)
+#+end_src
+
 * Parens stuff
 #+begin_src emacs-lisp
         (use-package paren
