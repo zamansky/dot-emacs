@@ -484,6 +484,13 @@
 (use-package yasnippet-classic-snippets)
 ;; Snippets:1 ends here
 
+;; [[file:config.org::*Proectile][Proectile:1]]
+(use-package projectile)
+(projectile-mode +1)
+(define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
+(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+;; Proectile:1 ends here
+
 ;; [[file:config.org::*Magit][Magit:1]]
 ;; some ediff settings
 (setq ediff-diff-options "")

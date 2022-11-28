@@ -522,6 +522,15 @@
 
 #+end_src
 
+* Proectile
+#+begin_src emacs-lisp
+  (use-package projectile)
+  (projectile-mode +1)
+  (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
+  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+
+
+#+end_src
 * Magit
 #+begin_src emacs-lisp
   ;; some ediff settings
