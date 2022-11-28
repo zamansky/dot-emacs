@@ -560,24 +560,24 @@
       ;;    (setq cider-cljs-lein-repl "(do (use 'figwheel-sidecar.repl-api) (start-figwheel!) (cljs-repl))")
 
       :bind (("M-r" . cider-namespace-refresh)
-	     ("C-c r" . cider-repl-reset)
-	     ("C-c ." . cider-reset-test-run-tests))
+             ("C-c r" . cider-repl-reset)
+             ("C-c ." . cider-reset-test-run-tests))
       )
 
   (defun my-clojure-mode-hook ()
-      (clj-refactor-mode 1)
+      ;;(clj-refactor-mode 1)
       (yas-minor-mode 1) ; for adding require/use/import statements
       ;; This choice of keybinding leaves cider-macroexpand-1 unbound
       (cljr-add-keybindings-with-prefix "C-c C-m"))
-  (use-package clj-refactor
-  :ensure t
-  :config
-  (add-hook 'clojure-mode-hook #'my-clojure-mode-hook))
+  ;; (use-package clj-refactor
+  ;; :ensure t
+  ;; :config
+  ;; (add-hook 'clojure-mode-hook #'my-clojure-mode-hook))
 ;; Clojure:1 ends here
 
 ;; [[file:config.org::*Rust][Rust:1]]
 (use-package rustic)
-(setq rustic-lsp-client 'eglot)
+(setq rustic-lsp-client 'lsp)
 ;; Rust:1 ends here
 
 ;; [[file:config.org::*Parens stuff][Parens stuff:1]]
