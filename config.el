@@ -92,82 +92,118 @@
 
 ;; [[file:config.org::*Completion frameworks][Completion frameworks:1]]
 ;; (use-package selectrum
-      ;; :init
-      ;; (selectrum-mode +1))
+        ;; :init
+        ;; (selectrum-mode +1))
 
-    (use-package vertico
-      :init
-      (vertico-mode +1))
-
-  (use-package orderless
-    :init
-    (setq completion-styles '(orderless)
-          completion-category-defaults nil
-          completion-category-overrides '((file (styles partial-completion)))))
-
-  ;; Persist history over Emacs restarts. Vertico sorts by history position.
-  (use-package savehist
-    :init
-    (savehist-mode))
-
-
-    (use-package marginalia
-      :config (marginalia-mode))
-
-    (use-package consult
-      :general
-      ("M-y" 'consult-yank-from-kill-ring
-       "C-x b" 'consult-buffer))
-  (recentf-mode)
-
-    (setq completion-ignore-case t)
-    (setq read-file-name-completion-ignore-case t)
-
-
+      (use-package vertico
+        :init
+        (vertico-mode +1))
 
     (use-package orderless
       :init
-      (setq completion-styles '(orderless)))
+      (setq completion-styles '(orderless)
+            completion-category-defaults nil
+            completion-category-overrides '((file (styles partial-completion)))))
 
-    (use-package company
-      :config
-      (setq company-idle-delay 0)
-      (setq company-minimum-prefix-length 3)
-      (global-company-mode t))
+    ;; Persist history over Emacs restarts. Vertico sorts by history position.
+    (use-package savehist
+      :init
+      (savehist-mode))
 
 
-  (use-package embark
-  :ensure t
+      (use-package marginalia
+        :config (marginalia-mode))
 
-  :bind
-  (("C-." . embark-act)         ;; pick some comfortable binding
-   ("C-;" . embark-dwim)        ;; good alternative: M-.
-   ("C-h B" . embark-bindings)) ;; alternative for `describe-bindings'
+      (use-package consult
+        :general
+        ("M-y" 'consult-yank-from-kill-ring
+         "C-x b" 'consult-buffer))
+    (recentf-mode)
 
-   :init
+      (setq completion-ignore-case t)
+      (setq read-file-name-completion-ignore-case t)
 
-   ;; Optionally replace the key help with a completing-read interface
-   (setq prefix-help-command #'embark-prefix-help-command)
 
-   :config
 
-   ;; Hide the mode line of the Embark live/completions buffers
-   (add-to-list 'display-buffer-alist
-                '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
-                  nil
-                  (window-parameters (mode-line-format . none))))
+      (use-package orderless
+        :init
+        (setq completion-styles '(orderless)))
 
-  )
+      ;; (use-package company
+      ;;   :config
+      ;;   (setq company-idle-delay 0)
+      ;;   (setq company-minimum-prefix-length 3)
+      ;;   (global-company-mode t))
 
-;; Consult users will also want the embark-consult package.
-(use-package embark-consult
-  :ensure t
-  :after (embark consult)
-  :demand t ; only necessary if you have the hook below
-  ;; if you want to have consult previews as you move around an
-  ;; auto-updating embark collect buffer
-  :hook
-  (embark-collect-mode . consult-preview-at-point-mode))
+
+(use-package corfu
+  ;; Optional customizations
+  :custom
+  (corfu-cycle t)                 ; Allows cycling through candidates
+  (corfu-auto t)                  ; Enable auto completion
+  (corfu-auto-prefix 2)
+  (corfu-auto-delay 0.0)
+  (corfu-echo-documentation 0.25) ; Enable documentation for completions
+  (corfu-preview-current 'insert) ; Do not preview current candidate
+  (corfu-preselect-first nil)
+  (corfu-on-exact-match nil)      ; Don't auto expand tempel snippets
+
+  ;; Optionally use TAB for cycling, default is `corfu-complete'.
+  :bind (:map corfu-map
+              ("M-SPC" . corfu-insert-separator)
+              ("TAB"     . corfu-next)
+              ([tab]     . corfu-next)
+              ("S-TAB"   . corfu-previous)
+              ([backtab] . corfu-previous)
+              ("S-<return>" . corfu-insert)
+              ("RET"     . nil) ;; leave my enter alone!
+              )
+
+  :init
+  (corfu-global-mode)
+  ;; (corfu-history-mode)
+
+  :config
+  (setq tab-always-indent 'complete)
+  (add-hook 'eshell-mode-hook
+            (lambda () (setq-local corfu-quit-at-boundary t
+                              corfu-quit-no-match t
+                              corfu-auto nil)
+              (corfu-mode))))
+
+
+    (use-package embark
+    :ensure t
+
+    :bind
+    (("C-." . embark-act)         ;; pick some comfortable binding
+     ("C-;" . embark-dwim)        ;; good alternative: M-.
+     ("C-h B" . embark-bindings)) ;; alternative for `describe-bindings'
+
+     :init
+
+     ;; Optionally replace the key help with a completing-read interface
+     (setq prefix-help-command #'embark-prefix-help-command)
+
+     :config
+
+     ;; Hide the mode line of the Embark live/completions buffers
+     (add-to-list 'display-buffer-alist
+                  '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
+                    nil
+                    (window-parameters (mode-line-format . none))))
+
+    )
+
+  ;; Consult users will also want the embark-consult package.
+  (use-package embark-consult
+    :ensure t
+    :after (embark consult)
+    :demand t ; only necessary if you have the hook below
+    ;; if you want to have consult previews as you move around an
+    ;; auto-updating embark collect buffer
+    :hook
+    (embark-collect-mode . consult-preview-at-point-mode))
 ;; Completion frameworks:1 ends here
 
 ;; [[file:config.org::*org][org:1]]
@@ -558,8 +594,8 @@
 (use-package parseclj)
   (use-package cider
       :config
-      (add-hook 'cider-repl-mode-hook #'company-mode)
-      (add-hook 'cider-mode-hook #'company-mode)
+      ;;(add-hook 'cider-repl-mode-hook #'company-mode)
+      ;; (add-hook 'cider-mode-hook #'company-mode)
       (add-hook 'cider-mode-hook #'eldoc-mode)
   ;;    (add-hook 'cider-mode-hook #'cider-hydra-mode)
       (setq cider-repl-use-pretty-printing t)
