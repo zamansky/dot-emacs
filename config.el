@@ -160,8 +160,8 @@
               )
 
   :init
-  (corfu-global-mode)
-  ;; (corfu-history-mode)
+  (global-corfu-mode)
+  ;;(corfu-history-mode)
 
   :config
   (setq tab-always-indent 'complete)
@@ -591,30 +591,34 @@
 ;; lsp:1 ends here
 
 ;; [[file:config.org::*Clojure][Clojure:1]]
-(use-package parseclj)
-  (use-package cider
+(use-package paredit)
+(use-package multiple-cursors)
+  (use-package inflections)
+
+  (use-package parseclj)
+    (use-package cider
+        :config
+        ;;(add-hook 'cider-repl-mode-hook #'company-mode)
+        ;; (add-hook 'cider-mode-hook #'company-mode)
+        (add-hook 'cider-mode-hook #'eldoc-mode)
+    ;;    (add-hook 'cider-mode-hook #'cider-hydra-mode)
+        (setq cider-repl-use-pretty-printing t)
+        (setq cider-repl-display-help-banner nil)
+        ;;    (setq cider-cljs-lein-repl "(do (use 'figwheel-sidecar.repl-api) (start-figwheel!) (cljs-repl))")
+
+        :bind (("M-r" . cider-namespace-refresh)
+               ("C-c r" . cider-repl-reset)
+               ("C-c ." . cider-reset-test-run-tests))
+        )
+
+      (defun my-clojure-mode-hook ()
+        (clj-refactor-mode 1)
+        (yas-minor-mode 1) ; for adding require/use/import statements
+        ;; This choice of keybinding leaves cider-macroexpand-1 unbound
+        (cljr-add-keybindings-with-prefix "C-c C-m"))
+    (use-package clj-refactor
       :config
-      ;;(add-hook 'cider-repl-mode-hook #'company-mode)
-      ;; (add-hook 'cider-mode-hook #'company-mode)
-      (add-hook 'cider-mode-hook #'eldoc-mode)
-  ;;    (add-hook 'cider-mode-hook #'cider-hydra-mode)
-      (setq cider-repl-use-pretty-printing t)
-      (setq cider-repl-display-help-banner nil)
-      ;;    (setq cider-cljs-lein-repl "(do (use 'figwheel-sidecar.repl-api) (start-figwheel!) (cljs-repl))")
-
-      :bind (("M-r" . cider-namespace-refresh)
-             ("C-c r" . cider-repl-reset)
-             ("C-c ." . cider-reset-test-run-tests))
-      )
-
-    (defun my-clojure-mode-hook ()
-      (clj-refactor-mode 1)
-      (yas-minor-mode 1) ; for adding require/use/import statements
-      ;; This choice of keybinding leaves cider-macroexpand-1 unbound
-      (cljr-add-keybindings-with-prefix "C-c C-m"))
-  (use-package clj-refactor
-    :config
-  (add-hook 'clojure-mode-hook #'my-clojure-mode-hook))
+    (add-hook 'clojure-mode-hook #'my-clojure-mode-hook))
 ;; Clojure:1 ends here
 
 ;; [[file:config.org::*Rust][Rust:1]]
