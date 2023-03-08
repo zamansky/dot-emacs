@@ -708,8 +708,16 @@
   
 #+end_src
 
-
 #+begin_src emacs-lisp
+    (use-package puni
+    :config
+    (dolist (hook '(prog-mode-hook sgml-mode-hook nxml-mode-hook tex-mode-hook eval-expression-minibuffer-setup-hook))
+  (add-hook hook #'puni-mode))
+  )
+
+#+end_src
+
+#+begin_src emacs-lisp :tangle no
   (use-package smartparens)
 
     (require 'smartparens-config)
@@ -917,7 +925,7 @@
 
 #+end_src
 #+begin_src emacs-lisp
-  (add-hook 'clojure-mode-hook #'smartparens-mode)
+;;  (add-hook 'clojure-mode-hook #'smartparens-mode)
 
 
 #+end_src
@@ -989,6 +997,7 @@
 ;; eval: (add-hook 'after-save-hook (lambda ()(if (y-or-n-p "Tangle?")(org-babel-tangle))) nil t) 
 ;; End:
   
+
 
 
 

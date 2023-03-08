@@ -43,6 +43,7 @@
    ["#5f5f5f" "#ff4b4b" "#a1db00" "#fce94f" "#5fafd7" "#d18aff" "#afd7ff" "#ffffff"])
  '(awesome-tray-mode-line-active-color "#0031a9")
  '(awesome-tray-mode-line-inactive-color "#d7d7d7")
+ '(codeium/metadata/api_key "1d48df4f-af97-4042-b5ab-cc8c4fac6d3c")
  '(custom-safe-themes
    '("583148e87f779040b5349db48b6fcad6fe9a873c6ada20487e9a1ec40d845505" "0feb7052df6cfc1733c1087d3876c26c66410e5f1337b039be44cb406b6187c6" "27a1dd6378f3782a593cc83e108a35c2b93e5ecc3bd9057313e1d88462701fcd" "f703efe04a108fcd4ad104e045b391c706035bce0314a30d72fbf0840b355c2c" default))
  '(exwm-floating-border-color "#888888")
