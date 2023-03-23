@@ -600,7 +600,7 @@
   (use-package magit-delta
   :hook (magit-mode . magit-delta-mode))
 
-  (use-package forge)
+ ;; (use-package forge)
 #+end_src
 
 * lsp

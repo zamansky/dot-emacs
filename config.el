@@ -529,37 +529,37 @@
 
 ;; [[file:config.org::*Magit][Magit:1]]
 ;; some ediff settings
-(setq ediff-diff-options "")
-(setq ediff-custom-diff-options "-u")
-(setq ediff-window-setup-function 'ediff-setup-windows-plain)
-(setq ediff-split-window-function 'split-window-vertically)
+ (setq ediff-diff-options "")
+ (setq ediff-custom-diff-options "-u")
+ (setq ediff-window-setup-function 'ediff-setup-windows-plain)
+ (setq ediff-split-window-function 'split-window-vertically)
 
-(use-package magit
-        :init
-    (progn
-(setq magit-section-initial-visibility-alist
-      '((stashes . hide) (untracked . hide) (unpushed . hide)))
-
-
-    (bind-key "C-x g" 'magit-status)
-    ))
-
-(setq magit-status-margin
-  '(t "%Y-%m-%d %H:%M " magit-log-margin-width t 18))
-
-    (use-package git-timemachine
-        )
-
-;; (use-package git-gutter-fringe
-;;
-;; :config
-;;(global-git-gutter-mode))
+ (use-package magit
+         :init
+     (progn
+ (setq magit-section-initial-visibility-alist
+       '((stashes . hide) (untracked . hide) (unpushed . hide)))
 
 
-(use-package magit-delta
-:hook (magit-mode . magit-delta-mode))
+     (bind-key "C-x g" 'magit-status)
+     ))
 
-(use-package forge)
+ (setq magit-status-margin
+   '(t "%Y-%m-%d %H:%M " magit-log-margin-width t 18))
+
+     (use-package git-timemachine
+         )
+
+ ;; (use-package git-gutter-fringe
+ ;;
+ ;; :config
+ ;;(global-git-gutter-mode))
+
+
+ (use-package magit-delta
+ :hook (magit-mode . magit-delta-mode))
+
+;; (use-package forge)
 ;; Magit:1 ends here
 
 ;; [[file:config.org::*lsp][lsp:1]]
